@@ -1,8 +1,7 @@
 ﻿@model List<SurveyGenerator.Models.Question>
 @{
     ViewBag.Title = "Survey";
-    <script type="text/javascript" src="~/Scripts/jquery.simplePagination.js"></script>
-    <script type="text/javascript" src="~/Scripts/main.js"></script>
+    
 }
 
 <h2>@ViewBag.SurveyName</h2>
@@ -22,6 +21,14 @@
 
 <div id="pagination"></div>
 
+@*<script>
+    var app = angular.module('myApp', []);
+    app.controller('customersCtrl', function($scope, $http) {
+        $http.get("http://www.w3schools.com/angular/customers.php")
+        .then(function (response) {$scope.names = response.data.records;});
+    });
+</script>*@
+
 <script type="text/javascript">
     $(function() {
         $("#pagination").pagination({
@@ -35,8 +42,6 @@
         });
     });
 </script>
-
-
 
 
 @*<table>
