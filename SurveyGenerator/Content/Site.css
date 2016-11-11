@@ -22,3 +22,52 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+    ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+ul.pagination li a.active {
+    border-radius: 5px;
+    background-color: rosybrown;
+    color: white;
+}
+
+td label {
+    margin-right: 30px;
+    margin-left: 15px;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+#pagination {
+    padding-top: 5px;
+}
+
+.body-content {
+    background-color: aliceblue;
+}
+
+body {
+    background-color: darkgray;
+}

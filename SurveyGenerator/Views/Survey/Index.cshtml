@@ -1,0 +1,103 @@
+﻿@model List<SurveyGenerator.Models.Question>
+@{
+    ViewBag.Title = "Survey";
+    <script type="text/javascript" src="~/Scripts/jquery.simplePagination.js"></script>
+    <script type="text/javascript" src="~/Scripts/main.js"></script>
+}
+
+<h2>@ViewBag.SurveyName</h2>
+
+<div ng-app="myApp" ng-controller="customersCtrl">
+
+    <table>
+        <tr ng-repeat="x in names">
+            <td>{{ x.Name }}</td>
+            <td>{{ x.Country }}</td>
+        </tr>
+    </table>
+
+</div>
+
+<br />
+
+<div id="pagination"></div>
+
+<script type="text/javascript">
+    $(function() {
+        $("#pagination").pagination({
+            pages: 3,
+            currentPage: @ViewBag.pageNumber,
+            cssStyle: 'light-theme',
+            hrefTextPrefix: '/Survey/Index/@ViewBag.userId/@ViewBag.surveyId/',
+            onPageClick: function() {
+                collectData();
+            }
+        });
+    });
+</script>
+
+
+
+
+@*<table>
+        @foreach (var question in Model.ToList())
+        {
+            var response = question.Responses.FirstOrDefault(c => c.Respondent.Id == ViewBag.RespondentId);
+
+            if (question.QuestionType.ToString() == "Text")
+            {
+                <tr>
+                    <td>@Html.Label(question.Text)</td>
+                    <td>@Html.TextBox("textbox", response.TextValue ?? null, new { @class = "text-answer", questionId = question.Id.ToString() })</td>
+                </tr>
+            }
+            else if (question.QuestionType.ToString() == "Checkbox")
+            {
+                <tr>
+                    <td>@Html.Label(question.Text)</td>
+                    <td>
+                        @foreach (var answer in question.Answers)
+                        {
+                            var respAnswer = response.Answers?.FirstOrDefault(c => c.Id == answer.Id);
+                            if (respAnswer != null)
+                            {
+                                <div class="checkbox">
+                                    <label><input type="checkbox" class="checkbox-answer" questionId=@question.Id answerId=@answer.Id checked />@answer.Text</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="checkbox">
+                                    <label><input type="checkbox" class="checkbox-answer" questionId=@question.Id answerId=@answer.Id />@answer.Text</label>
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+            else if (question.QuestionType.ToString() == "Radio")
+            {
+                <tr>
+                    <td>@Html.Label(question.Text)</td>
+                    <td>
+                        @foreach (var answer in question.Answers)
+                        {
+                            var respAnswer = response.Answers?.FirstOrDefault();
+                            if (respAnswer != null && respAnswer.Id == answer.Id)
+                            {
+                                <div class="radio">
+                                    <label><input type="radio" class="radio-answer" name=@question.Id questionId=@question.Id answerId=@answer.Id checked />@answer.Text</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="radio">
+                                    <label><input type="radio" class="radio-answer" name=@question.Id questionId=@question.Id answerId=@answer.Id />@answer.Text</label>
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </table>*@

@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using SurveyGenerator.Context;
 using SurveyGenerator.Helpers;
 using SurveyGenerator.Models;
 
@@ -13,6 +14,10 @@ namespace SurveyGenerator.Controllers
 {
     public class HomeController : Controller
     {
+        private SurveyDbContext db = new SurveyDbContext();
+
+        public const int PageSize = 8;
+
         public ActionResult Index()
         {
             return View();

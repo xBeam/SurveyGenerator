@@ -1,5 +1,12 @@
 ﻿$(document).ready(function () {
     console.log(1);
+
+    var app = angular.module('myApp', []);
+    app.controller('customersCtrl', function ($scope, $http) {
+        $http.get("@Url.Action()") //"http://www.w3schools.com/angular/customers.php")
+        .then(function (response) { $scope.names = response.data.records; });
+    });
+
     $('form')
         .submit(function () {
 
