@@ -3,6 +3,7 @@
 @model List<Question>
 @{
     ViewBag.Title = "Survey";
+    var respondentId = ViewBag.RespondentId;
 }
 
 <h2>@ViewBag.SurveyName</h2>
@@ -11,16 +12,17 @@
 
     <table class="table-bordered">
         <tr ng-repeat="x in questions">
+            <td>{{ $index + 1 }}</td>
             <td><label>{{ x.Text}}</label></td>
             <td ng-switch="x.QuestionType">
                 <div ng-switch-when="0" ng-repeat="answer in x.Answers">
                     <div class="checkbox">
-                        <label><input type="checkbox" class="checkbox-answer" questionId={{x.Id}} answerId={{answer.Id}} checked />{{answer.Text}}</label>
+                        <label><input type="checkbox" class="checkbox-answer" questionId={{x.Id}} answerId={{answer.Id}} checked/>{{answer.Text}}</label>
                     </div>
                 </div>
                 <div ng-switch-when="1" ng-repeat="answer in x.Answers">
                     <div class="radio">
-                        <label><input type="radio" class="radio-answer" name="{{x.Id}}" questionId="{{x.Id}}" answerId="{{answer.Id}}" checked />{{answer.Text}}</label>
+                        <label><input type="radio" class="radio-answer" name={{x.Id}} questionId={{x.Id}} answerId={{answer.Id}} checked/>{{answer.Text}}</label>
                     </div>
                 </div>
                 <div ng-switch-when="2">
