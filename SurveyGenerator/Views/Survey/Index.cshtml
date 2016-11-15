@@ -1,17 +1,32 @@
-﻿@model List<SurveyGenerator.Models.Question>
+﻿@using Newtonsoft.Json
+@using SurveyGenerator.Models
+@model List<Question>
 @{
     ViewBag.Title = "Survey";
-    
 }
 
 <h2>@ViewBag.SurveyName</h2>
 
 <div ng-app="myApp" ng-controller="customersCtrl">
 
-    <table>
-        <tr ng-repeat="x in names">
-            <td>{{ x.Name }}</td>
-            <td>{{ x.Country }}</td>
+    <table class="table-bordered">
+        <tr ng-repeat="x in questions">
+            <td><label>{{ x.Text}}</label></td>
+            <td ng-switch="x.QuestionType">
+                <div ng-switch-when="0" ng-repeat="answer in x.Answers">
+                    <div class="checkbox">
+                        <label><input type="checkbox" class="checkbox-answer" questionId={{x.Id}} answerId={{answer.Id}} checked />{{answer.Text}}</label>
+                    </div>
+                </div>
+                <div ng-switch-when="1" ng-repeat="answer in x.Answers">
+                    <div class="radio">
+                        <label><input type="radio" class="radio-answer" name="{{x.Id}}" questionId="{{x.Id}}" answerId="{{answer.Id}}" checked />{{answer.Text}}</label>
+                    </div>
+                </div>
+                <div ng-switch-when="2">
+                    <input type="text"/>
+                </div>
+            </td>
         </tr>
     </table>
 
@@ -21,13 +36,23 @@
 
 <div id="pagination"></div>
 
-@*<script>
-    var app = angular.module('myApp', []);
+<script>
+    @*var app = angular.module('myApp', []);
     app.controller('customersCtrl', function($scope, $http) {
-        $http.get("http://www.w3schools.com/angular/customers.php")
-        .then(function (response) {$scope.names = response.data.records;});
-    });
-</script>*@
+        $http.get("/Survey/GetQuestionList/")
+            .then(function(response) {
+                $scope.questions = response.questions;
+            });
+        //$scope.questions = ;
+        @*[{ Id: @Model.First().Id, Text: '@Model.First().Text'},
+                                { Id: 1, Text: "text" },
+                                { Id: 2, Text: "new texzst"}];
+            $scope.init = function (questions) {
+                $scope.employees= questions;
+            }
+        });*@
+
+</script>
 
 <script type="text/javascript">
     $(function() {

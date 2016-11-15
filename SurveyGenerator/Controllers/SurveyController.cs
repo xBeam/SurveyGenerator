@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Mvc;
 using SurveyGenerator.Context;
 using SurveyGenerator.Models;
+using Newtonsoft.Json;
 
 namespace SurveyGenerator.Controllers
 {
@@ -20,6 +21,15 @@ namespace SurveyGenerator.Controllers
         {
             InitializeDb();
 
+            ViewBag.userId = userId;
+            ViewBag.surveyId = surveyId;
+            ViewBag.pageNumber = pageNumber;
+            return View();
+        }
+
+        [Route("Survey/{userId:int}/{surveyId:int}/{pageNumber:int}/")]
+        public ActionResult GetQuestionList(int pageNumber = 1, int surveyId = 1, int userId = 1)
+        {
             var offset = (pageNumber - 1) * PageSize;
             var survey = db.SurveyInfos.FirstOrDefault(c => c.Id == surveyId);
 
@@ -34,13 +44,31 @@ namespace SurveyGenerator.Controllers
             db.Responses.ToList();
             db.Answers.ToList();
 
-            ViewBag.userId = userId;
-            ViewBag.surveyId = surveyId;
-            ViewBag.pageNumber = pageNumber;
+            
             ViewBag.SurveyName = survey.Title;
             ViewBag.RespondentId = respondent.Id;
 
-            return View(questionList);
+            //var json = questionList.Select(x =>
+            //    new
+            //    {
+            //        Id = x.Id,
+            //        Text = x.Text,
+            //        QuestionType = x.QuestionType,
+            //        Response = x.Responses.FirstOrDefault(c=>c.Respondent.Id == respondent.Id),
+            //        Answers = x.Answers.Where(c => c.Question.Id == x.Id).Select(c => new { answerId = c.Id, answerText = c.Text}),
+            //        //Survey = x.Survey
+            //    });
+
+            //return Json(json, JsonRequestBehavior.AllowGet);
+
+
+            var json = JsonConvert.SerializeObject(questionList, Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
         public void InitializeDb()
